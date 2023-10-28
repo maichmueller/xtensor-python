@@ -55,9 +55,7 @@ else()
     message(STATUS "Found pybind11: ${pybind11_INCLUDE_DIRS}/pybind11")
 endif()
 
-if(NOT ${NumPy_FOUND} OR NOT ${NUMPY_FOUND})
-    find_package(NumPy REQUIRED)
-endif()
+find_package(NumPy REQUIRED)
 message(STATUS "Found numpy: ${NUMPY_INCLUDE_DIRS}")
 
 # Build
