@@ -7,7 +7,7 @@
 # The full license is in the file LICENSE, distributed with this software. #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 project(xtensor-python)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
@@ -55,7 +55,9 @@ else()
     message(STATUS "Found pybind11: ${pybind11_INCLUDE_DIRS}/pybind11")
 endif()
 
-find_package(NumPy REQUIRED)
+if(NOT ${NumPy_FOUND} OR NOT ${NUMPY_FOUND})
+    find_package(NumPy REQUIRED)
+endif()
 message(STATUS "Found numpy: ${NUMPY_INCLUDE_DIRS}")
 
 # Build
