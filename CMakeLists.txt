@@ -7,10 +7,9 @@
 # The full license is in the file LICENSE, distributed with this software. #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.15)
 project(xtensor-python)
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(XTENSOR_PYTHON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Versioning
@@ -55,8 +54,8 @@ else()
     message(STATUS "Found pybind11: ${pybind11_INCLUDE_DIRS}/pybind11")
 endif()
 
-find_package(NumPy REQUIRED)
-message(STATUS "Found numpy: ${NUMPY_INCLUDE_DIRS}")
+find_package(Python3 REQUIRED COMPONENTS NumPy)
+message(STATUS "Found numpy: ${Python3_NumPy_INCLUDE_DIRS}")
 
 # Build
 # =====
@@ -75,9 +74,9 @@ set(XTENSOR_PYTHON_HEADERS
 
 add_library(xtensor-python INTERFACE)
 target_include_directories(xtensor-python INTERFACE
-    "$<BUILD_INTERFACE:${XTENSOR_PYTHON_INCLUDE_DIR};${pybind11_INCLUDE_DIRS};${NUMPY_INCLUDE_DIRS}>"
+    "$<BUILD_INTERFACE:${XTENSOR_PYTHON_INCLUDE_DIR};${pybind11_INCLUDE_DIRS}>"
     $<INSTALL_INTERFACE:include>)
-target_link_libraries(xtensor-python INTERFACE xtensor)
+target_link_libraries(xtensor-python INTERFACE xtensor Python3::NumPy)
 get_target_property(inc_dir xtensor-python INTERFACE_INCLUDE_DIRECTORIES)
 
 OPTION(BUILD_TESTS "xtensor test suite" OFF)
